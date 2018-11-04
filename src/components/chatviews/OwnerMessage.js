@@ -1,6 +1,6 @@
 import React from 'react'
 
-const OwnerMessage = () =>{
+const OwnerMessage = ({content}) =>{
     return (
         <li>
             <div className="message-data">
@@ -8,7 +8,7 @@ const OwnerMessage = () =>{
                 <span className="message-data-time">10:20 AM, Today</span>
             </div>
             <div className="message my-message">
-                Actually everything was fine. I'm very excited to show this to our team.
+              {content}
             </div>
         </li>
     )

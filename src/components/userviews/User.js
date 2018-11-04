@@ -1,13 +1,14 @@
 import React from 'react'
 
-const User = () =>{
+const User = ({user}) =>{
+    let status = user.isOnline ? "online":"offline"
     return (
         <li className="clearfix">
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar" />
+            <img src={user.photoURL} alt="avatar" />
             <div className="about">
-                <div className="name">Vincent Porter</div>
+                <div className="name">{user.displayName}</div>
                 <div className="status">
-                    <i className="fa fa-circle online"></i> online
+                    <i className={`fa fa-circle ${status}`}></i> {status}
                 </div>
             </div>
         </li>

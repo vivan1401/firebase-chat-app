@@ -1,6 +1,6 @@
 import React from 'react'
 
-const OtherMessage = () =>{
+const OtherMessage = ({content}) =>{
     return (
         <li className="clearfix">
             <div className="message-data align-right">
@@ -9,7 +9,7 @@ const OtherMessage = () =>{
               
             </div>
             <div className="message other-message float-right">
-              Well I am not sure. The rest of the team is not here yet. Maybe in an hour or so? Have you faced any problems at the last phase of the project?
+              {content}
             </div>
         </li>
     )

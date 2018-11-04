@@ -1,18 +1,15 @@
 import React, { Component } from 'react'
 import UserList from '../userviews/UsersList'
 import ChatView from "../chatviews/ChatView";
-import firebase from '../../config/fbConfig';
 import Navbar from "./Navbar";
+import { connect } from 'react-redux'
+import { Redirect } from "react-router-dom";
 
-export default class Home extends Component {
+class Home extends Component {
   render() {
-    let user = firebase.auth().currentUser;
+    if(this.props.auth.isEmpty)
+      return <Redirect to='/signin'></Redirect>;
 
-    if (user) {
-      // User is signed in.
-    } else {
-      // No user is signed in.
-    }
     return (
       <div>
         <Navbar></Navbar>
@@ -24,3 +21,11 @@ export default class Home extends Component {
     )
   }
 }
+
+const mapStateToProps = (state)=>{
+  return{
+    auth: state.firebase.auth,
+  }
+}
+
+export default connect(mapStateToProps)(Home)
