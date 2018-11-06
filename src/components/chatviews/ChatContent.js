@@ -39,7 +39,7 @@ class ChatContent extends Component {
                         })}
                     </ul>
                 </div>
-                <InputMessage uid={this.props.auth.uid} otherId={otherId} conversation={conversation}></InputMessage>
+                <InputMessage uid={this.props.auth.uid} otherId={otherId} conversation={conversation} match={this.props.match}></InputMessage>
             </div>
         )
     }

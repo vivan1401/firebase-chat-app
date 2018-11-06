@@ -16,18 +16,19 @@ class InputMessage  extends Component {
     handleSubmit = (e)=>{
         e.preventDefault();
         e.target.reset();
-        if(this.state.content !== ''){
-            this.props.sendMessage(
-                {
-                    conversation: this.props.conversation,
-                    uid: this.props.uid,
-                    otherId: this.props.otherId,
-                    content: this.state.content
-                });
-            this.setState({
-                content: '',
-            })
-        }
+        if(this.props.match.path === '/chat/:uid/:id')
+            if(this.state.content !== ''){
+                this.props.sendMessage(
+                    {
+                        conversation: this.props.conversation,
+                        uid: this.props.uid,
+                        otherId: this.props.otherId,
+                        content: this.state.content
+                    });
+                this.setState({
+                    content: '',
+                })
+            }
     }
 
     render(){
