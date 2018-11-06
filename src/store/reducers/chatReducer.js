@@ -15,6 +15,7 @@ const initState = {
 const chatReducer = (state = initState, action) =>{
     switch (action.type){
         case actionList.SEND_MESSAGE:
+            console.log('Send message success')
             return {
                 ...state,
                 chatContents: [...state.chatContents,

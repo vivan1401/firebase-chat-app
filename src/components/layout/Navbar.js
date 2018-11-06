@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { signOut } from '../../store/actions/authActions';
 
 const Navbar = (props) =>{
-    console.log('props',props)
+    //console.log('Nav',props)
     const { auth } = props;
     return  (
         <nav className="nav-wrapper grey darken-3">
@@ -14,7 +14,9 @@ const Navbar = (props) =>{
                     <li><NavLink to="/" onClick={props.signOut}>Log Out</NavLink></li>
                     <li>
                         {!auth.isEmpty?
-                        <NavLink to="/" className="btn btn-floating pink lighten-1">{auth.displayName[0]}</NavLink>
+                        <NavLink to="/" className="btn btn-floating">
+                            <img src={auth.photoURL} alt="" style={{maxHeight:'100%',maxWidth:'100%'}}/>
+                        </NavLink>
                         :''
                         }
                     </li>
@@ -25,6 +27,7 @@ const Navbar = (props) =>{
 }
 
 const mapStateToProps = (state)=>{
+    //console.log('nav',state)
     return{
         auth: state.firebase.auth
     }

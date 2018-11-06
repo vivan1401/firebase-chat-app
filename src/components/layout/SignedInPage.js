@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 
 class SignedInPage extends Component {  
   render() {
-    console.log('signin',this.props.auth)
+    //console.log('signin',this.props.auth)
     if(!this.props.auth.isEmpty)
       return <Redirect to='/'></Redirect>
       

@@ -1,3 +1,5 @@
+import { actionList } from "../actions/actionList";
+
 const initState = {
     users: [{
             id: '1',
@@ -33,7 +35,16 @@ const initState = {
 }
 
 const userReducer = (state = initState, action) => {
-    return state;
+    switch (action.type){
+        case actionList.CREATE_CHAT:
+            console.log(actionList.CREATE_CHAT)
+            return state;
+        case actionList.CREATE_CHAT_ERROR:
+            console.log(actionList.CREATE_CHAT_ERROR, action.err)
+            return state;
+        default:
+            return state;
+    }
 }
 
 export default userReducer;

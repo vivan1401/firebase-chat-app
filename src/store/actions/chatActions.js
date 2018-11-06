@@ -1,33 +1,23 @@
 import { actionList } from "./actionList";
 
-export const createChat = (chat) => {
-    return (dispatch, getState, { getFirebase, getFirestore}) => {
-        // make async call to database
-        dispatch({
-            type: actionList.CREATE_CHAT,
-            chat
-        });
-    }
-}
-
 export const sendMessage = (message) => {
     return (dispatch, getState, { getFirebase, getFirestore}) => {
         //make async call to database
         const firestore = getFirestore();
-        firestore.collection('chatContents').doc('WlOeo3gHfVLlpli6WXwk').set({content:[
-            {
-            isOwner: true,
-            content: message,
-            sentAt: new Date()
-        }]})
-        firestore.collection('chatContents').add({
-            isOwner: true,
-            content: message,
-            sentAt: new Date()
+        //console.log('chataction',message)
+        firestore.collection('conversations').doc(message.conversation.id).update({chatContents:
+            [...message.conversation.chatContents,
+                {
+                    userId: message.uid,
+                    isOwner: true,
+                    content: message.content,
+                    sentAt: new Date()
+                }
+            ]
         }).then(()=>{
             dispatch({
                 type: actionList.SEND_MESSAGE,
-                message
+                message:message.content
             })
         }).catch((err)=>{
             dispatch({
@@ -35,5 +25,21 @@ export const sendMessage = (message) => {
                 err
             })
         })
+        
+        /* firestore.collection('chatContents').add({
+            isOwner: true,
+            content: message.content,
+            sentAt: new Date()
+        }).then(()=>{
+            dispatch({
+                type: actionList.SEND_MESSAGE,
+                message:message.content
+            })
+        }).catch((err)=>{
+            dispatch({
+                type: actionList.SEND_MESSAGE_ERROR,
+                err
+            })
+        }) */
     }
 }

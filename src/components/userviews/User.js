@@ -1,12 +1,17 @@
 import React from 'react'
 
-const User = ({user}) =>{
-    let status = user.isOnline ? "online":"offline"
+
+const User = (props) =>{
+    //console.log('user',props.user)
+    let status = props.user.isOnline ? "online":"offline"
     return (
-        <li className="clearfix">
-            <img src={user.photoURL} alt="avatar" />
+        <li className="clearfix" onClick={()=>{
+            props.userClick(props.user.id,props.user.conversations);
+            //props.history.push('/chat/'+props.user.id)
+            }}>
+            <img src={props.user.photoURL} alt="avatar" />
             <div className="about">
-                <div className="name">{user.displayName}</div>
+                <div className="name">{props.user.displayName}</div>
                 <div className="status">
                     <i className={`fa fa-circle ${status}`}></i> {status}
                 </div>

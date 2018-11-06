@@ -16,6 +16,8 @@ export const signIn =  (credentials) =>{
             console.log('token',token);
 
             return firestore.collection('users').doc(user.uid).set({
+                displayName: user.displayName,
+                photoURL: user.photoURL,
                 isOnline: true,
                 time: new Date()
             });
@@ -37,7 +39,7 @@ export const signOut =  (credentials) =>{
         const firestore = getFirestore();
         
         firebase.auth().signOut().then((result) =>{
-            return firestore.collection('users').doc(user.uid).set({
+            return firestore.collection('users').doc(user.uid).update({
                 isOnline: false,
                 time: new Date()
             })

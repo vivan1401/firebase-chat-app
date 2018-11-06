@@ -14,8 +14,8 @@ class Home extends Component {
       <div>
         <Navbar></Navbar>
         <div className="container clearfix">
-            <UserList></UserList>
-            <ChatView></ChatView>
+            <UserList {...this.props}></UserList>
+            <ChatView {...this.props}></ChatView>
         </div>
       </div>
     )

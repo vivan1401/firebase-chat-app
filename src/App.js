@@ -11,7 +11,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' render={(props)=><Home {...props}/>}></Route>
             <Route path='/signin' render={(props)=><SignedInPage {...props}/>}></Route>
-            <Route path='/chat/:id' component={Home}></Route>
+            <Route path='/chat/:uid/:id' render={(props)=><Home {...props}/>}></Route>
           </Switch>
         </div>
       </BrowserRouter>

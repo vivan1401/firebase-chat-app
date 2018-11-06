@@ -19,7 +19,7 @@ body {
   float: left;
 }
 .people-list .search {
-  padding: 20px;
+  padding: 10px 20px 0px 20px;
 }
 .people-list input {
   border-radius: 3px;
@@ -35,8 +35,8 @@ body {
   left: -25px;
 }
 .people-list ul {
-  padding: 20px;
-  height: 670px;
+  padding: 0px 20px;
+  height: 76vh;
   overflow-y: scroll;
 }
 .people-list ul::-webkit-scrollbar{
@@ -48,7 +48,7 @@ body {
 .people-list img {
   float: left;
   max-width:20%;
-  max-height:20%;
+  max-height:20vh;
   border-radius: 50%;
 }
 .people-list .about {
@@ -76,7 +76,7 @@ body {
 .chat .chat-header img {
   float: left;
   max-width:10%;
-  max-height:10%;
+  max-height:10vh;
   border-radius: 50%;
 }
 .chat .chat-header .chat-about {
@@ -101,7 +101,7 @@ body {
   padding: 30px 30px 20px;
   border-bottom: 2px solid white;
   overflow-y: scroll;
-  height: 575px;
+  height: 57vh;
 }
 .chat .chat-history .message-data {
   margin-bottom: 15px;

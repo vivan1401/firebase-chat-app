@@ -17,7 +17,13 @@ class InputMessage  extends Component {
         e.preventDefault();
         e.target.reset();
         if(this.state.content !== ''){
-            this.props.sendMessage(this.state.content);
+            this.props.sendMessage(
+                {
+                    conversation: this.props.conversation,
+                    uid: this.props.uid,
+                    otherId: this.props.otherId,
+                    content: this.state.content
+                });
             this.setState({
                 content: '',
             })
@@ -25,6 +31,7 @@ class InputMessage  extends Component {
     }
 
     render(){
+        //console.log('input', this.props)
         return (
             <div className="chat-message clearfix">
                 <form onSubmit={this.handleSubmit}>
