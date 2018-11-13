@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import MicrolinkCard from 'react-microlink'
 
 const OtherMessage = (props) =>{
     //console.log('message',props)
@@ -12,7 +13,9 @@ const OtherMessage = (props) =>{
               }
             </div>
             <div className="message other-message float-right">
-              {props.chatContent.content}
+              {props.isUrl(props.chatContent.content)?
+                <MicrolinkCard url={props.chatContent.content} size='large'></MicrolinkCard>
+                :props.chatContent.content}
             </div>
         </li>
     )

@@ -25,21 +25,12 @@ export const sendMessage = (message) => {
                 err
             })
         })
-        
-        /* firestore.collection('chatContents').add({
-            isOwner: true,
-            content: message.content,
-            sentAt: new Date()
-        }).then(()=>{
-            dispatch({
-                type: actionList.SEND_MESSAGE,
-                message:message.content
-            })
-        }).catch((err)=>{
-            dispatch({
-                type: actionList.SEND_MESSAGE_ERROR,
-                err
-            })
-        }) */
     }
 }
+
+export const inputMessage = (inputMess)=>(
+    {
+        type: actionList.INPUT_MESSAGE,
+        inputMess
+    }
+)

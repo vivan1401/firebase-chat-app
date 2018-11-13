@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import MicrolinkCard from 'react-microlink'
 
 const OwnerMessage = (props) =>{
     return (
@@ -11,7 +12,9 @@ const OwnerMessage = (props) =>{
                     moment(props.chatContent.sentAt.toDate()).calendar():''}</span>
             </div>
             <div className="message my-message">
-              {props.chatContent.content}
+                {props.isUrl(props.chatContent.content)?
+                    <MicrolinkCard url={props.chatContent.content} size='large'></MicrolinkCard>
+                    :props.chatContent.content}
             </div>
         </li>
     )

@@ -1,6 +1,7 @@
 import { actionList } from "../actions/actionList";
 
 const initState = {
+    searchStr: '',
     users: [{
             id: '1',
             displayName: 'Vincent Porter',
@@ -41,6 +42,17 @@ const userReducer = (state = initState, action) => {
             return state;
         case actionList.CREATE_CHAT_ERROR:
             console.log(actionList.CREATE_CHAT_ERROR, action.err)
+            return state;
+        case actionList.SEARCH:
+            return {
+                ...state,
+                searchStr: action.searchStr
+            }
+        case actionList.STAR:
+            console.log(actionList.STAR)
+            return state;
+        case actionList.STAR_ERROR:
+            console.log(actionList.STAR_ERROR, action.err)
             return state;
         default:
             return state;

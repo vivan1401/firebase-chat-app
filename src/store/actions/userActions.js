@@ -44,3 +44,28 @@ export const createChat = (chat) => {
     }
 }
 
+export const search = (searchStr)=>(
+    {
+        type: actionList.SEARCH,
+        searchStr
+    }
+)
+
+export const star = (starInfo)=>{
+    return (dispatch, getState, { getFirebase, getFirestore}) => {
+        // make async call to database
+        const firestore = getFirestore();
+        firestore.collection('users').doc(starInfo.ownerId).update({
+            stars: starInfo.stars
+        }).then(()=>{
+            dispatch({
+                type: actionList.STAR
+            });
+        }).catch((err)=>{
+            dispatch({
+                type: actionList.STAR_ERROR,
+                err
+            })
+        })
+    }
+}

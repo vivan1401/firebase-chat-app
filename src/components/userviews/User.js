@@ -4,7 +4,7 @@ import moment from 'moment'
 
 const User = (props) =>{
     //console.log('user',props.user)
-    let status = props.user.isOnline ? "online":moment(props.user.time.toDate()).calendar()
+    let status = props.user.isOnline ? "online":moment(props.user.time.toDate()).fromNow()
     return (
         <li className="clearfix" onClick={()=>{
             props.userClick(props.user.id,props.user.conversations);

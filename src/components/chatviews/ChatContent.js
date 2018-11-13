@@ -18,6 +18,11 @@ class ChatContent extends Component {
         this.domChatHistory.scrollTop = this.domChatHistory.scrollHeight;
     }
 
+    isUrl = (str)=>{
+        let regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/
+        return regexp.test(str);
+    }
+
     render() {
         let conversationId = this.props.match.params.id;
         let otherId = this.props.match.params.uid;
@@ -31,10 +36,10 @@ class ChatContent extends Component {
                         {chatContents.map((chatContent, index)=>{
                             //console.log('chatContent',chatContent)
                             if(chatContent.userId === this.props.auth.uid){
-                                return <OwnerMessage chatContent={chatContent} key={index}/>
+                                return <OwnerMessage chatContent={chatContent} key={index} isUrl={this.isUrl}/>
                             } 
                             else{
-                                return <OtherMessage chatContent={chatContent} key={index}/>
+                                return <OtherMessage chatContent={chatContent} key={index} isUrl={this.isUrl}/>
                             }  
                         })}
                     </ul>

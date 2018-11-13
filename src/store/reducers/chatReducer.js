@@ -1,7 +1,7 @@
 import {actionList} from "../actions/actionList";
 
 const initState = {
-    id: '1',
+    inputMess: '',
     chatContents: [
         {isOwner: true, content: 'I am the bone of my sword!'},
         {isOwner: false, content: 'Steel is my body, and fire is my blood!'},
@@ -18,12 +18,18 @@ const chatReducer = (state = initState, action) =>{
             console.log('Send message success')
             return {
                 ...state,
+                inputMessage: '',
                 chatContents: [...state.chatContents,
                         {isOwner:true, content: action.message}]
             };
         case actionList.SEND_MESSAGE_ERROR:
             console.log('Send message error', action.err)
             return state;
+        case actionList.INPUT_MESSAGE:
+            return {
+                ...state,
+                inputMess: action.inputMess
+            }
         default: 
             return state;
     }

@@ -5,7 +5,7 @@ import '../Style.css'
 import { connect } from 'react-redux';
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
-import { createChat } from "../../store/actions/userActions";
+import { createChat,search} from "../../store/actions/userActions";
 import _ from "lodash";
 import arraySort from 'array-sort' 
 
@@ -47,31 +47,83 @@ class UsersList extends Component {
   }
 
   getListUserSorted = ()=>{
-    let messTime = this.props.profile.conversations.map((conversation,index)=>{
+    let messTime = []
+    this.props.profile.conversations.forEach(conversation => {      
       let conIndex = _.findIndex(this.props.conversations,(o)=>(o.id === conversation.conversationId));
       let lastContent = this.props.conversations[conIndex].chatContents.length-1;
-      return {uid: conversation.uid, sentAt: this.props.conversations[conIndex].chatContents[lastContent].sentAt};
+      if(lastContent > -1)
+        messTime.push({uid: conversation.uid, sentAt: this.props.conversations[conIndex].chatContents[lastContent].sentAt});
+    });
+
+    //console.log('mess time', messTime)
+    arraySort(this.props.users,'time',{reverse:true});
+    if(messTime.length === 0){
+      return this.props.users;
+    }
+
+    let userSort = []
+    let userSort1 = []
+    this.props.users.forEach(user=>{
+      let messTimeIndex = _.findIndex(messTime,(o)=>(o.uid === user.id))
+      user.sentAt = messTimeIndex>-1?messTime[messTimeIndex].sentAt:null;
+      if(messTimeIndex>-1){
+        userSort.push(user);
+      }
+      else{
+        userSort1.push(user);
+      }
     })
 
-    arraySort(messTime,'sentAt',{reverse: true});
+    arraySort(userSort,'sentAt',{reverse:true});    
+    //console.log('after sort', [...userSort,...userSort1])
+    return[...userSort,...userSort1];
+  }
 
-    let userSorted= messTime.map((mess, index)=>{
-      let userIndex = _.findIndex(this.props.users,(user)=>(user.id===mess.uid));
-      return this.props.users[userIndex];
+  handleSearch = (e)=>{
+    this.props.search(e.target.value);
+  }
+
+  filterSearch = (users)=>{
+    let userFilter = [];
+    users.forEach(user=>{
+      if(_.includes(user.displayName.toUpperCase(),this.props.searchStr.toUpperCase())){
+        userFilter.push(user);
+      }
     })
+    return userFilter;
+  }
 
-    return userSorted;
+  filterStar = (users)=>{
+    this.props.profile.stars.forEach(star=>{
+      let i = _.findIndex(users,(o)=>(o.id === star))
+      if(i > -1){
+        users.unshift(users[i]);
+        users.splice(i+1,1);
+      }
+      //console.log('filter star',star);
+    })
   }
 
   render() {
     let users = this.props.users;
     //console.log('userlist',this.props);  
-    if(this.props.profile.conversations && this.props.conversations.length !== 0){
-      users = this.getListUserSorted()
+    if(this.props.profile.conversations&& this.props.conversations.length !== 0){
+      if(this.props.profile.conversations.length !== 0)
+        users = this.getListUserSorted()
     }
+
+    if(this.props.searchStr !== ''){
+      users = this.filterSearch(users);
+    }
+
+    if(this.props.profile.stars){
+      if(this.props.profile.stars.length !== 0)
+        this.filterStar(users);
+    }
+
     return (
       <div className="people-list" id="people-list">
-        <Search></Search>
+        <Search handleSearch={this.handleSearch}></Search>
         <ul className="list">
           {
             users.map((user,index)=>{
@@ -94,13 +146,15 @@ const mapStateToProps = (state)=>{
   return{
     users: state.firestore.ordered.users||[],
     profile: state.firebase.profile,
-    conversations: state.firestore.ordered.conversations||[]
+    conversations: state.firestore.ordered.conversations||[],
+    searchStr: state.user.searchStr,
   }
 }
 
 const mapDispatchToProps = (dispatch) =>{
   return {
-      createChat: (info) => dispatch(createChat(info))
+      createChat: (info) => dispatch(createChat(info)),
+      search: (searchStr) => dispatch(search(searchStr)),
   }
 }
 
